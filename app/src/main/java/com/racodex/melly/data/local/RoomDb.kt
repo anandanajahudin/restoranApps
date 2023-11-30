@@ -42,20 +42,19 @@ abstract class RoomDb : RoomDatabase() {
         private val description =
             "This is the description text that is supposed to be long enough to show how the UI looks, so it's not a real text.\n"
         private val manufacturers = listOf(
-            Manufacturer(id = 1, name = "Duri", icon = R.drawable.ic_nike),
-            Manufacturer(id = 2, name = "Adidas", icon = R.drawable.adidas_48),
+            Manufacturer(id = 1, name = "Burger", icon = R.drawable.burger_beef_keju),
+            Manufacturer(id = 2, name = "Nasi", icon = R.drawable.nasgor),
         )
         private val advertisements = listOf(
-            Advertisement(1, R.drawable.banner_1, 1, 0),
-            Advertisement(2, R.drawable.banner_2, 2, 0),
-            Advertisement(3, R.drawable.banner_3, 3, 0),
+            Advertisement(1, R.drawable.banner1, 1, 0),
+            Advertisement(2, R.drawable.banner2, 2, 0),
         )
         private val nikeProducts = listOf(
             Product(
                 id = 1,
-                name = "Pegasus Trail Gortex Green",
-                image = R.drawable.pegasus_trail_3_gore_tex_dark_green,
-                price = 149.0,
+                name = "Burger Beef",
+                image = R.drawable.burger,
+                price = 8.0,
                 description = description,
                 manufacturerId = 1,
                 basicColorName = "dark-green",
@@ -66,14 +65,14 @@ abstract class RoomDb : RoomDatabase() {
                         image = it.image),
                     ProductColor(productId = it.id,
                         colorName = "lemon",
-                        image = R.drawable.pegasus_trail_3_gore_tex_lemon),
+                        image = R.drawable.burger),
                 )
             },
             Product(
                 id = 3,
-                name = "Air Huarache Gold",
-                image = R.drawable.air_huarache_le_gold_black,
-                price = 159.0,
+                name = "Burger Ayam Fillet",
+                image = R.drawable.burger_ayam_fillet,
+                price = 7.0,
                 description = description,
                 manufacturerId = 1,
                 basicColorName = "gold",
@@ -84,20 +83,20 @@ abstract class RoomDb : RoomDatabase() {
                         image = it.image),
                     ProductColor(productId = it.id,
                         colorName = "gray",
-                        image = R.drawable.air_huarache_le_gray_dark),
+                        image = R.drawable.burger_ayam_fillet),
                     ProductColor(productId = it.id,
                         colorName = "pink",
-                        image = R.drawable.air_huarache_le_pink_black),
+                        image = R.drawable.burger_ayam_fillet),
                     ProductColor(productId = it.id,
                         colorName = "red",
-                        image = R.drawable.air_huarache_le_red_black),
+                        image = R.drawable.burger_ayam_fillet),
                 )
             },
             Product(
                 id = 7,
-                name = "Blazer Low Black",
-                image = R.drawable.blazer_low_black,
-                price = 120.0,
+                name = "Burger Beef Paket 1",
+                image = R.drawable.burger_beef_double_keju_kentang_esteh,
+                price = 20.0,
                 description = description,
                 manufacturerId = 1,
                 basicColorName = "black",
@@ -108,19 +107,19 @@ abstract class RoomDb : RoomDatabase() {
                         image = it.image),
                     ProductColor(productId = it.id,
                         colorName = "pink",
-                        image = R.drawable.blazer_low_pink),
+                        image = R.drawable.burger_beef_double_keju_kentang_esteh),
                     ProductColor(productId = it.id,
                         colorName = "lemon",
-                        image = R.drawable.blazer_low_light_green),
+                        image = R.drawable.burger_beef_double_keju_kentang_esteh),
                 )
             },
         )
         private val adidasProducts = listOf(
             Product(
                 id = 10,
-                name = "Defiant Generation Green",
-                image = R.drawable.defiant_generation_green,
-                price = 149.0,
+                name = "Nasi Goreng",
+                image = R.drawable.nasgor,
+                price = 8.0,
                 description = description,
                 manufacturerId = 2,
                 basicColorName = "green",
@@ -131,15 +130,15 @@ abstract class RoomDb : RoomDatabase() {
                         image = it.image),
                     ProductColor(productId = it.id,
                         colorName = "red",
-                        image = R.drawable.defiant_generation_red),
+                        image = R.drawable.nasgor),
                 )
             },
 
             Product(
                 id = 12,
-                name = "Solarthon Primegreen Gray",
-                image = R.drawable.solarthon_primegreen_gray,
-                price = 159.0,
+                name = "Nasi Goreng Spesial Telur",
+                image = R.drawable.nasgor_telur,
+                price = 9.0,
                 description = description,
                 manufacturerId = 2,
                 basicColorName = "gray",
@@ -150,10 +149,10 @@ abstract class RoomDb : RoomDatabase() {
                         image = it.image),
                     ProductColor(productId = it.id,
                         colorName = "black",
-                        image = R.drawable.solarthon_primegreen_black),
+                        image = R.drawable.nasgor_telur),
                     ProductColor(productId = it.id,
                         colorName = "red",
-                        image = R.drawable.solarthon_primegreen_red),
+                        image = R.drawable.nasgor_telur),
                 )
             },
         )
@@ -232,10 +231,10 @@ abstract class RoomDb : RoomDatabase() {
                 dao.saveUser(
                     User(
                         userId = 1,
-                        name = "Tirta Rachmandiri",
+                        name = "User",
                         profile = user,
                         phone = "+6285821364004",
-                        email = "racodex@gmail.com",
+                        email = "example@gmail.com",
                         password = "12345678",
                         token = "ds2f434ls2ks2lsj2ls",
                     )
