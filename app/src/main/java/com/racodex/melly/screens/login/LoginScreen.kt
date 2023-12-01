@@ -23,6 +23,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import com.racodex.melly.R
 import com.racodex.melly.components.CustomButton
 import com.racodex.melly.components.CustomInputField
@@ -32,6 +33,7 @@ import com.racodex.melly.ui.theme.Dimension
 
 @Composable
 fun LoginScreen(
+    navHostController: NavHostController,
     loginViewModel: LoginViewModel = hiltViewModel(),
     onUserAuthenticated: () -> Unit,
     onToastRequested: (message: String, color: Color) -> Unit,
@@ -39,7 +41,6 @@ fun LoginScreen(
     val uiState by remember { loginViewModel.uiState }
     val emailOrPhone by remember { loginViewModel.emailOrPhone }
     val password by remember { loginViewModel.password }
-//    val signUp : SignupScreen
     
     Column(
         modifier = Modifier
@@ -63,20 +64,16 @@ fun LoginScreen(
                     shape = MaterialTheme.shapes.large,
                 )
                 .fillMaxWidth(),
-            value = emailOrPhone ?: "",
-            onValueChange = {
-                loginViewModel.updateEmailOrPhone(value = it.ifBlank { null })
-            },
             placeholder = "Email or Phone ...",
             textStyle = MaterialTheme.typography.caption.copy(fontWeight = FontWeight.Medium),
+            textColor = MaterialTheme.colors.onBackground,
+            backgroundColor = MaterialTheme.colors.surface,
+            imeAction = ImeAction.Next,
+            shape = MaterialTheme.shapes.large,
             padding = PaddingValues(
                 horizontal = Dimension.pagePadding,
                 vertical = Dimension.pagePadding.times(0.7f),
             ),
-            backgroundColor = MaterialTheme.colors.surface,
-            textColor = MaterialTheme.colors.onBackground,
-            imeAction = ImeAction.Next,
-            shape = MaterialTheme.shapes.large,
             leadingIcon = {
                 Icon(
                     modifier = Modifier
@@ -87,9 +84,11 @@ fun LoginScreen(
                     tint = MaterialTheme.colors.onBackground.copy(alpha = 0.4f),
                 )
             },
+            onValueChange = {
+                loginViewModel.updateEmailOrPhone(value = it.ifBlank { null })
+            },
             onFocusChange = { },
-            onKeyboardActionClicked = { },
-        )
+        ) { }
         Spacer(modifier = Modifier.height(Dimension.pagePadding))
         CustomInputField(
             modifier = Modifier
@@ -98,21 +97,17 @@ fun LoginScreen(
                     shape = MaterialTheme.shapes.large,
                 )
                 .fillMaxWidth(),
-            value = password ?: "",
-            onValueChange = {
-                loginViewModel.updatePassword(value = it.ifBlank { null })
-            },
             placeholder = "Password ...",
-            visualTransformation = PasswordVisualTransformation(),
             textStyle = MaterialTheme.typography.caption.copy(fontWeight = FontWeight.Medium),
+            textColor = MaterialTheme.colors.onBackground,
+            backgroundColor = MaterialTheme.colors.surface,
+            visualTransformation = PasswordVisualTransformation(),
+            imeAction = ImeAction.Done,
+            shape = MaterialTheme.shapes.large,
             padding = PaddingValues(
                 horizontal = Dimension.pagePadding,
                 vertical = Dimension.pagePadding.times(0.7f),
             ),
-            backgroundColor = MaterialTheme.colors.surface,
-            textColor = MaterialTheme.colors.onBackground,
-            imeAction = ImeAction.Done,
-            shape = MaterialTheme.shapes.large,
             leadingIcon = {
                 Icon(
                     modifier = Modifier
@@ -122,6 +117,9 @@ fun LoginScreen(
                     contentDescription = null,
                     tint = MaterialTheme.colors.onBackground.copy(alpha = 0.4f),
                 )
+            },
+            onValueChange = {
+                loginViewModel.updatePassword(value = it.ifBlank { null })
             },
             onFocusChange = { },
             onKeyboardActionClicked = { },
@@ -207,7 +205,8 @@ fun LoginScreen(
             textStyle = MaterialTheme.typography.button,
             onButtonClicked = {
                 /** Handle the click event of the login button */
-//                navHostController.navigate("second")
+                navHostController.navigate("Sign Up")
+
             },
             leadingIcon = {
                 if (uiState is UiState.Loading) {
