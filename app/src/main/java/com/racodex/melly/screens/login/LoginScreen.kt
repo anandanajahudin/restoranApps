@@ -1,5 +1,6 @@
 package com.racodex.melly.screens.login
 
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.CircularProgressIndicator
@@ -38,7 +39,8 @@ fun LoginScreen(
     val uiState by remember { loginViewModel.uiState }
     val emailOrPhone by remember { loginViewModel.emailOrPhone }
     val password by remember { loginViewModel.password }
-
+//    val signUp : SignupScreen
+    
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -205,7 +207,7 @@ fun LoginScreen(
             textStyle = MaterialTheme.typography.button,
             onButtonClicked = {
                 /** Handle the click event of the login button */
-
+//                navHostController.navigate("second")
             },
             leadingIcon = {
                 if (uiState is UiState.Loading) {
