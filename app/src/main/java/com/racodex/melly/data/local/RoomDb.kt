@@ -58,16 +58,18 @@ abstract class RoomDb : RoomDatabase() {
                 name = "Burger Beef",
                 image = R.drawable.burger,
                 price = 8.0,
-                description = description,
+                description = "Burger dengan daging sapi pilihan yang sangat tebal " +
+                        "dengan rasa nikmat dan harum, serta tingkat kematangan yang sempurna.",
                 manufacturerId = 1,
                 basicColorName = "dark-green",
             ),
             Product(
                 id = 2,
-                name = "Burger Ayam Fillet",
+                name = "Burger Chicken Fillet",
                 image = R.drawable.burger_ayam_fillet,
                 price = 7.0,
-                description = description,
+                description = "Burger dengan irisan daging ayam crispy dengan tekstur yang lembut" +
+                        "serta rasa yang nikmat, dengan harga yang terjangkau.",
                 manufacturerId = 1,
                 basicColorName = "gold",
             ),
@@ -76,7 +78,8 @@ abstract class RoomDb : RoomDatabase() {
                 name = "Burger Beef Paket 1",
                 image = R.drawable.burger_beef_double_keju_kentang_esteh,
                 price = 20.0,
-                description = description,
+                description = "Paket burger daging sapi yang sangat lengkap, " +
+                        "dilengkapi kentang goreng, dan es teh. Lebih banyak dan lebih murah.",
                 manufacturerId = 1,
                 basicColorName = "black",
             ),
@@ -85,7 +88,9 @@ abstract class RoomDb : RoomDatabase() {
                 name = "Burger Beef Double + Kentang",
                 image = R.drawable.burger_beef_double_kentang,
                 price = 18.0,
-                description = description,
+                description = "Paket burger daging sapi dilengkapi kentang goreng " +
+                        "sehingga dapat dinikmati sebagai makanan penutup, " +
+                        "dengan harga paket yang lebih murah",
                 manufacturerId = 1,
                 basicColorName = "black",
             ),
@@ -97,7 +102,8 @@ abstract class RoomDb : RoomDatabase() {
                 name = "Nasi Goreng",
                 image = R.drawable.nasgor,
                 price = 8.0,
-                description = description,
+                description = "Nasi goreng yaitu makanan khas Indonesia, dengan rasa yang nikmat " +
+                        "dilengkapi topping irisan daging ayam dan sosis.",
                 manufacturerId = 2,
                 basicColorName = "green",
             ),
@@ -106,7 +112,9 @@ abstract class RoomDb : RoomDatabase() {
                 name = "Nasi Goreng Spesial Telur",
                 image = R.drawable.nasgor_telur,
                 price = 9.0,
-                description = description,
+                description = "Nasi goreng spesial telur, adalah menu andalan orang Indonesia " +
+                        "karena dengan rasa sedapnya nasi goreng, akan lebih nikmat " +
+                        "apabila dilengkapi dengan telur.",
                 manufacturerId = 2,
                 basicColorName = "gray",
             ),
@@ -118,7 +126,8 @@ abstract class RoomDb : RoomDatabase() {
                 name = "Mie Goreng Spesial",
                 image = R.drawable.mie_goreng_spesial,
                 price = 9.0,
-                description = description,
+                description = "Mie goreng adalah makanan khas Indonesia selain Nasi Goreng, " +
+                        "mie goreng memiliki tekstur mie yang tebal dan enak.",
                 manufacturerId = 3,
                 basicColorName = "gray",
             ),
@@ -127,7 +136,9 @@ abstract class RoomDb : RoomDatabase() {
                 name = "Mie Goreng Udang",
                 image = R.drawable.mie_goreng_udang,
                 price = 11.0,
-                description = description,
+                description = "Mie goreng udang, adalah menu spesial bagi penikmat mie goreng " +
+                        "dengan rasa unik dari mie goreng, " +
+                        "dilengkapi dengan udang yang renyah dan sedap.",
                 manufacturerId = 3,
                 basicColorName = "gray",
             ),
@@ -232,7 +243,7 @@ abstract class RoomDb : RoomDatabase() {
             /** Insert products */
             // Insert Product Burger
             scope.launch {
-                burgerProducts.plus(nasiProducts).forEach {
+                burgerProducts.plus(nasiProducts).plus(mieProducts).forEach {
                     /** Insert the product itself */
                     dao.insertProduct(product = it)
                     /** Insert colors */

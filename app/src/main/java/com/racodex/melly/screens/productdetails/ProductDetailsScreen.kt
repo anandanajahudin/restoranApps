@@ -151,34 +151,45 @@ fun ProductDetailsScreen(
                         }
                     }
                     /** Sizes section */
-                    it.sizes?.let { sizes ->
-                        SizesSection(
+//                    it.sizes?.let { sizes ->
+//                        SizesSection(
+//                            modifier = Modifier
+//                                .align(Alignment.TopStart)
+//                                .addMoveAnimation(
+//                                    orientation = Orientation.Horizontal,
+//                                    from = (-60).dp,
+//                                    to = 0.dp,
+//                                    duration = 700,
+//                                ),
+//                            sizes = sizes.map { size -> size.size },
+//                            pickedSizeProvider = { size },
+//                            onSizePicked = productDetailsViewModel::updateSelectedSize,
+//                        )
+//                    }
+
+                    Column(
+                        modifier = Modifier
+                            .align(Alignment.BottomStart)
+                    ) {
+                        /** Price section */
+                        Text(
                             modifier = Modifier
-                                .align(Alignment.TopStart)
                                 .addMoveAnimation(
-                                    orientation = Orientation.Horizontal,
-                                    from = (-60).dp,
+                                    orientation = Orientation.Vertical,
+                                    from = 200.dp,
                                     to = 0.dp,
                                     duration = 700,
                                 ),
-                            sizes = sizes.map { size -> size.size },
-                            pickedSizeProvider = { size },
-                            onSizePicked = productDetailsViewModel::updateSelectedSize,
+                            text = "$${it.price}",
+                            style = MaterialTheme.typography.h4,
                         )
+                        /** Description section */
+                        Text(
+                            text = "${it.description}",
+                            style = MaterialTheme.typography.caption,
+                        )
+
                     }
-                    /** Price section */
-                    Text(
-                        modifier = Modifier
-                            .align(Alignment.BottomStart)
-                            .addMoveAnimation(
-                                orientation = Orientation.Vertical,
-                                from = 200.dp,
-                                to = 0.dp,
-                                duration = 700,
-                            ),
-                        text = "$${it.price}",
-                        style = MaterialTheme.typography.h4,
-                    )
                     /** Bookmarking button */
                     ReactiveBookmarkIcon(
                         modifier = Modifier
@@ -194,21 +205,21 @@ fun ProductDetailsScreen(
                         onBookmarkChange = { onUpdateBookmarksState(productId) }
                     )
                     /** colors section */
-                    it.colors?.let { colors ->
-                        ColorsSection(
-                            modifier = Modifier
-                                .align(Alignment.BottomEnd)
-                                .addMoveAnimation(
-                                    orientation = Orientation.Vertical,
-                                    from = 200.dp,
-                                    to = 0.dp,
-                                    duration = 700,
-                                ),
-                            colors = colors.map { color -> color.colorName },
-                            pickedColorProvider = { color },
-                            onColorPicked = productDetailsViewModel::updateSelectedColor,
-                        )
-                    }
+//                    it.colors?.let { colors ->
+//                        ColorsSection(
+//                            modifier = Modifier
+//                                .align(Alignment.BottomEnd)
+//                                .addMoveAnimation(
+//                                    orientation = Orientation.Vertical,
+//                                    from = 200.dp,
+//                                    to = 0.dp,
+//                                    duration = 700,
+//                                ),
+//                            colors = colors.map { color -> color.colorName },
+//                            pickedColorProvider = { color },
+//                            onColorPicked = productDetailsViewModel::updateSelectedColor,
+//                        )
+//                    }
                 }
                 /** Add / Remove from cart button */
                 CustomButton(
