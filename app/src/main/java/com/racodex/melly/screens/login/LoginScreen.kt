@@ -167,6 +167,7 @@ fun LoginScreen(
                 }
             }
         )
+
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -178,7 +179,7 @@ fun LoginScreen(
                 modifier = Modifier
                     .background(MaterialTheme.colors.background)
                     .padding(horizontal = Dimension.pagePadding.div(2)),
-                text = "Or using",
+                text = "Or",
                 style = MaterialTheme.typography.caption
                     .copy(
                         fontWeight = FontWeight.SemiBold,
@@ -188,47 +189,79 @@ fun LoginScreen(
         }
 
         /** Another signing options */
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(Dimension.pagePadding),
-        ) {
-            DrawableButton(
-                paddingValue = PaddingValues(Dimension.sm),
-                elevation = Dimension.elevation,
-                painter = painterResource(id = R.drawable.ic_google),
-                onButtonClicked = {},
-                backgroundColor = MaterialTheme.colors.background,
-                shape = MaterialTheme.shapes.medium,
-                iconSize = Dimension.mdIcon.times(0.8f),
-            )
-            DrawableButton(
-                paddingValue = PaddingValues(Dimension.sm),
-                elevation = Dimension.elevation,
-                painter = painterResource(id = R.drawable.ic_facebook),
-                onButtonClicked = {},
-                backgroundColor = MaterialTheme.colors.background,
-                shape = MaterialTheme.shapes.medium,
-                iconSize = Dimension.mdIcon.times(0.8f),
-            )
-            DrawableButton(
-                paddingValue = PaddingValues(Dimension.sm),
-                elevation = Dimension.elevation,
-                painter = painterResource(id = R.drawable.ic_twitter),
-                onButtonClicked = {},
-                backgroundColor = MaterialTheme.colors.background,
-                shape = MaterialTheme.shapes.medium,
-                iconSize = Dimension.mdIcon.times(0.8f),
-            )
-            DrawableButton(
-                paddingValue = PaddingValues(Dimension.sm),
-                elevation = Dimension.elevation,
-                painter = painterResource(id = R.drawable.ic_apple),
-                onButtonClicked = {},
-                backgroundColor = MaterialTheme.colors.background,
-                shape = MaterialTheme.shapes.medium,
-                iconSize = Dimension.mdIcon.times(0.8f),
-            )
-        }
+        CustomButton(
+            modifier = Modifier
+                .fillMaxWidth()
+                .shadow(
+                    elevation = if (uiState !is UiState.Loading) Dimension.elevation else Dimension.zero,
+                    shape = MaterialTheme.shapes.large,
+                ),
+            shape = MaterialTheme.shapes.large,
+            padding = PaddingValues(Dimension.pagePadding.div(2)),
+            buttonColor = MaterialTheme.colors.secondary,
+            contentColor = MaterialTheme.colors.onSecondary,
+            text = "Register",
+            enabled = uiState !is UiState.Loading,
+            textStyle = MaterialTheme.typography.button,
+            onButtonClicked = {
+                /** Handle the click event of the login button */
+
+            },
+            leadingIcon = {
+                if (uiState is UiState.Loading) {
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                            .padding(end = Dimension.pagePadding)
+                            .size(Dimension.smIcon),
+                        color = MaterialTheme.colors.onSecondary,
+                        strokeWidth = Dimension.xs
+                    )
+                }
+            }
+        )
+
+//        Row(
+//            verticalAlignment = Alignment.CenterVertically,
+//            horizontalArrangement = Arrangement.spacedBy(Dimension.pagePadding),
+//        ) {
+//            DrawableButton(
+//                paddingValue = PaddingValues(Dimension.sm),
+//                elevation = Dimension.elevation,
+//                painter = painterResource(id = R.drawable.ic_google),
+//                onButtonClicked = {},
+//                backgroundColor = MaterialTheme.colors.background,
+//                shape = MaterialTheme.shapes.medium,
+//                iconSize = Dimension.mdIcon.times(0.8f),
+//            )
+//            DrawableButton(
+//                paddingValue = PaddingValues(Dimension.sm),
+//                elevation = Dimension.elevation,
+//                painter = painterResource(id = R.drawable.ic_facebook),
+//                onButtonClicked = {},
+//                backgroundColor = MaterialTheme.colors.background,
+//                shape = MaterialTheme.shapes.medium,
+//                iconSize = Dimension.mdIcon.times(0.8f),
+//            )
+//            DrawableButton(
+//                paddingValue = PaddingValues(Dimension.sm),
+//                elevation = Dimension.elevation,
+//                painter = painterResource(id = R.drawable.ic_twitter),
+//                onButtonClicked = {},
+//                backgroundColor = MaterialTheme.colors.background,
+//                shape = MaterialTheme.shapes.medium,
+//                iconSize = Dimension.mdIcon.times(0.8f),
+//            )
+//            DrawableButton(
+//                paddingValue = PaddingValues(Dimension.sm),
+//                elevation = Dimension.elevation,
+//                painter = painterResource(id = R.drawable.ic_apple),
+//                onButtonClicked = {},
+//                backgroundColor = MaterialTheme.colors.background,
+//                shape = MaterialTheme.shapes.medium,
+//                iconSize = Dimension.mdIcon.times(0.8f),
+//            )
+//        }
+
         Divider(Modifier.padding(vertical = Dimension.pagePadding))
         CustomButton(
             modifier = Modifier,

@@ -44,12 +44,15 @@ abstract class RoomDb : RoomDatabase() {
         private val manufacturers = listOf(
             Manufacturer(id = 1, name = "Burger", icon = R.drawable.burger_beef_keju),
             Manufacturer(id = 2, name = "Nasi", icon = R.drawable.nasgor),
+            Manufacturer(id = 3, name = "Mie", icon = R.drawable.mie_goreng_udang),
         )
         private val advertisements = listOf(
             Advertisement(1, R.drawable.banner1, 1, 0),
             Advertisement(2, R.drawable.banner2, 2, 0),
+            Advertisement(3, R.drawable.banner3, 3, 0),
         )
-        private val nikeProducts = listOf(
+
+        private val burgerProducts = listOf(
             Product(
                 id = 1,
                 name = "Burger Beef",
@@ -58,104 +61,78 @@ abstract class RoomDb : RoomDatabase() {
                 description = description,
                 manufacturerId = 1,
                 basicColorName = "dark-green",
-            ).also {
-                it.colors = mutableListOf(
-                    ProductColor(productId = it.id,
-                        colorName = it.basicColorName,
-                        image = it.image),
-                    ProductColor(productId = it.id,
-                        colorName = "lemon",
-                        image = R.drawable.burger),
-                )
-            },
+            ),
             Product(
-                id = 3,
+                id = 2,
                 name = "Burger Ayam Fillet",
                 image = R.drawable.burger_ayam_fillet,
                 price = 7.0,
                 description = description,
                 manufacturerId = 1,
                 basicColorName = "gold",
-            ).also {
-                it.colors = mutableListOf(
-                    ProductColor(productId = it.id,
-                        colorName = it.basicColorName,
-                        image = it.image),
-                    ProductColor(productId = it.id,
-                        colorName = "gray",
-                        image = R.drawable.burger_ayam_fillet),
-                    ProductColor(productId = it.id,
-                        colorName = "pink",
-                        image = R.drawable.burger_ayam_fillet),
-                    ProductColor(productId = it.id,
-                        colorName = "red",
-                        image = R.drawable.burger_ayam_fillet),
-                )
-            },
+            ),
             Product(
-                id = 7,
+                id = 3,
                 name = "Burger Beef Paket 1",
                 image = R.drawable.burger_beef_double_keju_kentang_esteh,
                 price = 20.0,
                 description = description,
                 manufacturerId = 1,
                 basicColorName = "black",
-            ).also {
-                it.colors = mutableListOf(
-                    ProductColor(productId = it.id,
-                        colorName = it.basicColorName,
-                        image = it.image),
-                    ProductColor(productId = it.id,
-                        colorName = "pink",
-                        image = R.drawable.burger_beef_double_keju_kentang_esteh),
-                    ProductColor(productId = it.id,
-                        colorName = "lemon",
-                        image = R.drawable.burger_beef_double_keju_kentang_esteh),
-                )
-            },
-        )
-        private val adidasProducts = listOf(
+            ),
             Product(
-                id = 10,
+                id = 4,
+                name = "Burger Beef Double + Kentang",
+                image = R.drawable.burger_beef_double_kentang,
+                price = 18.0,
+                description = description,
+                manufacturerId = 1,
+                basicColorName = "black",
+            ),
+        )
+
+        private val nasiProducts = listOf(
+            Product(
+                id = 5,
                 name = "Nasi Goreng",
                 image = R.drawable.nasgor,
                 price = 8.0,
                 description = description,
                 manufacturerId = 2,
                 basicColorName = "green",
-            ).also {
-                it.colors = mutableListOf(
-                    ProductColor(productId = it.id,
-                        colorName = it.basicColorName,
-                        image = it.image),
-                    ProductColor(productId = it.id,
-                        colorName = "red",
-                        image = R.drawable.nasgor),
-                )
-            },
-
+            ),
             Product(
-                id = 12,
+                id = 6,
                 name = "Nasi Goreng Spesial Telur",
                 image = R.drawable.nasgor_telur,
                 price = 9.0,
                 description = description,
                 manufacturerId = 2,
                 basicColorName = "gray",
-            ).also {
-                it.colors = mutableListOf(
-                    ProductColor(productId = it.id,
-                        colorName = it.basicColorName,
-                        image = it.image),
-                    ProductColor(productId = it.id,
-                        colorName = "black",
-                        image = R.drawable.nasgor_telur),
-                    ProductColor(productId = it.id,
-                        colorName = "red",
-                        image = R.drawable.nasgor_telur),
-                )
-            },
+            ),
         )
+
+        private val mieProducts = listOf(
+            Product(
+                id = 7,
+                name = "Mie Goreng Spesial",
+                image = R.drawable.mie_goreng_spesial,
+                price = 9.0,
+                description = description,
+                manufacturerId = 3,
+                basicColorName = "gray",
+            ),
+            Product(
+                id = 8,
+                name = "Mie Goreng Udang",
+                image = R.drawable.mie_goreng_udang,
+                price = 11.0,
+                description = description,
+                manufacturerId = 3,
+                basicColorName = "gray",
+            ),
+        )
+
         private val paymentProviders = listOf(
             PaymentProvider(
                 id = "apple",
@@ -203,7 +180,7 @@ abstract class RoomDb : RoomDatabase() {
         )
 
         init {
-            nikeProducts.onEach {
+            burgerProducts.onEach {
                 it.sizes = mutableListOf(
                     ProductSize(it.id, 38),
                     ProductSize(it.id, 40),
@@ -211,7 +188,7 @@ abstract class RoomDb : RoomDatabase() {
                     ProductSize(it.id, 44),
                 )
             }
-            adidasProducts.onEach {
+            nasiProducts.onEach {
                 it.sizes = mutableListOf(
                     ProductSize(it.id, 38),
                     ProductSize(it.id, 40),
@@ -219,7 +196,6 @@ abstract class RoomDb : RoomDatabase() {
                     ProductSize(it.id, 44),
                 )
             }
-
             scope.launch {
                 populateDatabase(dao = client.get().getDao(), scope = scope)
             }
@@ -252,9 +228,11 @@ abstract class RoomDb : RoomDatabase() {
                     dao.insertAdvertisement(it)
                 }
             }
+
             /** Insert products */
+            // Insert Product Burger
             scope.launch {
-                nikeProducts.plus(adidasProducts).forEach {
+                burgerProducts.plus(nasiProducts).forEach {
                     /** Insert the product itself */
                     dao.insertProduct(product = it)
                     /** Insert colors */
@@ -267,12 +245,46 @@ abstract class RoomDb : RoomDatabase() {
                     }
                 }
             }
+
+            // Insert Product Nasi
+//            scope.launch {
+//                nasiProducts.forEach {
+//                    /** Insert the product itself */
+//                    dao.insertProduct(product = it)
+//                    /** Insert colors */
+//                    it.colors?.forEach { productColor ->
+//                        dao.insertOtherProductCopy(productColor)
+//                    }
+//                    /** Insert size */
+//                    it.sizes?.forEach { productSize ->
+//                        dao.insertSize(productSize)
+//                    }
+//                }
+//            }
+
+            // Insert Product Mie
+//            scope.launch {
+//                mieProducts.forEach {
+//                    /** Insert the product itself */
+//                    dao.insertProduct(product = it)
+//                    /** Insert colors */
+//                    it.colors?.forEach { productColor ->
+//                        dao.insertOtherProductCopy(productColor)
+//                    }
+//                    /** Insert size */
+//                    it.sizes?.forEach { productSize ->
+//                        dao.insertSize(productSize)
+//                    }
+//                }
+//            }
+
             /** Insert payment providers */
             scope.launch {
                 paymentProviders.forEach {
                     dao.savePaymentProvider(paymentProvider = it)
                 }
             }
+
             /** Insert user's payment providers */
             scope.launch {
                 userPaymentAccounts.forEach {
