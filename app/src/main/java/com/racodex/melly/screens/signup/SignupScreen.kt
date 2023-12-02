@@ -1,5 +1,8 @@
 package com.racodex.melly.screens.signup
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -10,12 +13,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
@@ -31,6 +36,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.racodex.melly.R
+import com.racodex.melly.components.CustomButton
 import com.racodex.melly.components.CustomInputField
 import com.racodex.melly.sealed.Screen
 import com.racodex.melly.sealed.UiState
@@ -39,15 +45,18 @@ import com.racodex.melly.ui.theme.Dimension
 @Composable
 fun SignupScreen(
     signupViewModel: SignupViewModel = hiltViewModel(),
+    onNavigationRequested: (route: String, removePreviousRoute: Boolean) -> Unit
 ) {
     val uiState by remember { signupViewModel.uiState }
     val emailOrPhone by remember { signupViewModel.emailOrPhone }
     val password by remember { signupViewModel.password }
 
     Column(
-        modifier = Modifier.fillMaxSize(
-
-        )
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(Dimension.pagePadding),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
             text = "Register",
@@ -149,6 +158,45 @@ fun SignupScreen(
             shape = MaterialTheme.shapes.large,
         ){Text(text = "Register", color = Color.White)
         }
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = Dimension.pagePadding),
+            contentAlignment = Alignment.Center,
+        ) {
+            Divider()
+            Text(
+                modifier = Modifier
+                    .background(MaterialTheme.colors.background)
+                    .padding(horizontal = Dimension.pagePadding.div(2)),
+                text = "Or",
+                style = MaterialTheme.typography.caption
+                    .copy(
+                        fontWeight = FontWeight.SemiBold,
+                        color = MaterialTheme.colors.onBackground.copy(alpha = 0.7f)
+                    ),
+            )
+        }
+        CustomButton(
+            modifier = Modifier
+                .fillMaxWidth()
+                .shadow(
+                    elevation = if (uiState !is UiState.Error) Dimension.elevation else Dimension.zero,
+                    shape = MaterialTheme.shapes.large,
+                ),
+            shape = MaterialTheme.shapes.large,
+            padding = PaddingValues(Dimension.pagePadding.div(2)),
+            buttonColor = MaterialTheme.colors.primary,
+            contentColor = MaterialTheme.colors.onPrimary,
+            text = "Login",
+            textStyle = MaterialTheme.typography.button,
+            onButtonClicked = {
+                /** Handle the click event of the login button */
+                /** Handle the click event of the login button */
+                onNavigationRequested(Screen.Login.route, true)
+            },
+        )
 
 //        val uiState by remember { signupViewModel.uiState }
 //        when (uiState) {

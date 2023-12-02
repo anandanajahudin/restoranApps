@@ -1,5 +1,7 @@
 package com.racodex.melly.screens.login
 
+import android.content.Intent
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -26,26 +28,35 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat.startActivity
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.Navigation
 import androidx.navigation.compose.rememberNavController
 import com.racodex.melly.R
 import com.racodex.melly.components.CustomButton
 import com.racodex.melly.components.CustomInputField
 import com.racodex.melly.screens.signup.SignupScreen
+import com.racodex.melly.screens.signup.SignupViewModel
 import com.racodex.melly.sealed.Screen
 import com.racodex.melly.sealed.UiState
 import com.racodex.melly.ui.theme.Dimension
+import hilt_aggregated_deps._com_racodex_melly_screens_signup_SignupViewModel_HiltModules_KeyModule
 
 @Composable
 fun LoginScreen(
     loginViewModel: LoginViewModel = hiltViewModel(),
     onUserAuthenticated: () -> Unit,
     onToastRequested: (message: String, color: Color) -> Unit,
+    onNavigationRequested: (route: String, removePreviousRoute: Boolean) -> Unit
 ) {
     val uiState by remember { loginViewModel.uiState }
     val emailOrPhone by remember { loginViewModel.emailOrPhone }
     val password by remember { loginViewModel.password }
-    val controller = rememberNavController()
+//    val controller = rememberNavController()
+//    val signupViewModel by remember { }
+
 
     Column(
         modifier = Modifier
@@ -194,31 +205,33 @@ fun LoginScreen(
                     ),
             )
         }
+//        val onClickAction = remember(Unit) {
+////            Log.d("TAG", "message")
+//
+//            return@remember {
+//                onNavigationRequested(Screen.Signup.route, true)
+//            }
+//        }
 
         /** Another signing options */
-        Button(
+        CustomButton(
             modifier = Modifier
-                .padding(all = Dp(10F))
                 .fillMaxWidth()
                 .shadow(
-                    elevation = if (uiState !is UiState.Loading) Dimension.elevation else Dimension.zero,
+                    elevation = if (uiState !is UiState.Error) Dimension.elevation else Dimension.zero,
                     shape = MaterialTheme.shapes.large,
                 ),
-            colors = ButtonDefaults.outlinedButtonColors(
-                backgroundColor = MaterialTheme.colors.secondary
-            ),
-            onClick = {
-                controller.navigate("signup")
-//                controller.navigate(Screen.Signup.route)
-//                onToastRequested("Sign up, Boss!!", Color.Red)
-            },
-
-            // below line is use to set or
-            // button as enable or disable.
-            enabled = true,
             shape = MaterialTheme.shapes.large,
-        ){Text(text = "Register", color = Color.White)
-        }
+            padding = PaddingValues(Dimension.pagePadding.div(2)),
+            buttonColor = MaterialTheme.colors.secondary,
+            contentColor = MaterialTheme.colors.onSecondary,
+            text = "Register",
+            textStyle = MaterialTheme.typography.button,
+            onButtonClicked = {
+                /** Handle the click event of the login button */
+                onNavigationRequested(Screen.Signup.route, true)
+            },
+        )
         Divider(Modifier.padding(vertical = Dimension.pagePadding))
         CustomButton(
             modifier = Modifier,

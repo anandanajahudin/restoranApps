@@ -278,13 +278,16 @@ fun ScaffoldSection(
                 }
                 composable(Screen.Signup.route) {
                     onStatusBarColorChange(MaterialTheme.colors.background)
-                    SignupScreen()
+                    SignupScreen(
+                        onNavigationRequested = onNavigationRequested,
+                    )
                 }
                 composable(Screen.Login.route) {
                     onStatusBarColorChange(MaterialTheme.colors.background)
                     LoginScreen(
                         onUserAuthenticated = onBackRequested,
                         onToastRequested = onToastRequested,
+                        onNavigationRequested = onNavigationRequested,
                     )
                 }
                 composable(Screen.Home.route) {
