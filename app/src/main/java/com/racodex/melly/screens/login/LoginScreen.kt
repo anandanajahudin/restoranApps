@@ -1,8 +1,10 @@
 package com.racodex.melly.screens.login
 
-import android.content.Intent
+import android.widget.Toast
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Button
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
@@ -15,25 +17,29 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
+import androidx.navigation.NavController
 import com.racodex.melly.R
 import com.racodex.melly.components.CustomButton
 import com.racodex.melly.components.CustomInputField
 import com.racodex.melly.components.DrawableButton
+import com.racodex.melly.screens.signup.SignupScreen
 import com.racodex.melly.sealed.UiState
 import com.racodex.melly.ui.theme.Dimension
 
 @Composable
 fun LoginScreen(
-    navHostController: NavHostController,
+//    navController: NavController,
     loginViewModel: LoginViewModel = hiltViewModel(),
     onUserAuthenticated: () -> Unit,
     onToastRequested: (message: String, color: Color) -> Unit,
@@ -41,7 +47,7 @@ fun LoginScreen(
     val uiState by remember { loginViewModel.uiState }
     val emailOrPhone by remember { loginViewModel.emailOrPhone }
     val password by remember { loginViewModel.password }
-    
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -64,16 +70,20 @@ fun LoginScreen(
                     shape = MaterialTheme.shapes.large,
                 )
                 .fillMaxWidth(),
+            value = emailOrPhone ?: "",
+            onValueChange = {
+                loginViewModel.updateEmailOrPhone(value = it.ifBlank { null })
+            },
             placeholder = "Email or Phone ...",
             textStyle = MaterialTheme.typography.caption.copy(fontWeight = FontWeight.Medium),
-            textColor = MaterialTheme.colors.onBackground,
-            backgroundColor = MaterialTheme.colors.surface,
-            imeAction = ImeAction.Next,
-            shape = MaterialTheme.shapes.large,
             padding = PaddingValues(
                 horizontal = Dimension.pagePadding,
                 vertical = Dimension.pagePadding.times(0.7f),
             ),
+            backgroundColor = MaterialTheme.colors.surface,
+            textColor = MaterialTheme.colors.onBackground,
+            imeAction = ImeAction.Next,
+            shape = MaterialTheme.shapes.large,
             leadingIcon = {
                 Icon(
                     modifier = Modifier
@@ -84,11 +94,9 @@ fun LoginScreen(
                     tint = MaterialTheme.colors.onBackground.copy(alpha = 0.4f),
                 )
             },
-            onValueChange = {
-                loginViewModel.updateEmailOrPhone(value = it.ifBlank { null })
-            },
             onFocusChange = { },
-        ) { }
+            onKeyboardActionClicked = { },
+        )
         Spacer(modifier = Modifier.height(Dimension.pagePadding))
         CustomInputField(
             modifier = Modifier
@@ -97,17 +105,21 @@ fun LoginScreen(
                     shape = MaterialTheme.shapes.large,
                 )
                 .fillMaxWidth(),
+            value = password ?: "",
+            onValueChange = {
+                loginViewModel.updatePassword(value = it.ifBlank { null })
+            },
             placeholder = "Password ...",
-            textStyle = MaterialTheme.typography.caption.copy(fontWeight = FontWeight.Medium),
-            textColor = MaterialTheme.colors.onBackground,
-            backgroundColor = MaterialTheme.colors.surface,
             visualTransformation = PasswordVisualTransformation(),
-            imeAction = ImeAction.Done,
-            shape = MaterialTheme.shapes.large,
+            textStyle = MaterialTheme.typography.caption.copy(fontWeight = FontWeight.Medium),
             padding = PaddingValues(
                 horizontal = Dimension.pagePadding,
                 vertical = Dimension.pagePadding.times(0.7f),
             ),
+            backgroundColor = MaterialTheme.colors.surface,
+            textColor = MaterialTheme.colors.onBackground,
+            imeAction = ImeAction.Done,
+            shape = MaterialTheme.shapes.large,
             leadingIcon = {
                 Icon(
                     modifier = Modifier
@@ -117,9 +129,6 @@ fun LoginScreen(
                     contentDescription = null,
                     tint = MaterialTheme.colors.onBackground.copy(alpha = 0.4f),
                 )
-            },
-            onValueChange = {
-                loginViewModel.updatePassword(value = it.ifBlank { null })
             },
             onFocusChange = { },
             onKeyboardActionClicked = { },
@@ -167,7 +176,6 @@ fun LoginScreen(
                 }
             }
         )
-
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -179,7 +187,7 @@ fun LoginScreen(
                 modifier = Modifier
                     .background(MaterialTheme.colors.background)
                     .padding(horizontal = Dimension.pagePadding.div(2)),
-                text = "Or",
+                text = "Or using",
                 style = MaterialTheme.typography.caption
                     .copy(
                         fontWeight = FontWeight.SemiBold,
@@ -189,80 +197,32 @@ fun LoginScreen(
         }
 
         /** Another signing options */
-        CustomButton(
-            modifier = Modifier
-                .fillMaxWidth()
-                .shadow(
-                    elevation = if (uiState !is UiState.Loading) Dimension.elevation else Dimension.zero,
-                    shape = MaterialTheme.shapes.large,
-                ),
-            shape = MaterialTheme.shapes.large,
-            padding = PaddingValues(Dimension.pagePadding.div(2)),
-            buttonColor = MaterialTheme.colors.secondary,
-            contentColor = MaterialTheme.colors.onSecondary,
-            text = "Register",
-            enabled = uiState !is UiState.Loading,
-            textStyle = MaterialTheme.typography.button,
-            onButtonClicked = {
-                /** Handle the click event of the login button */
-                navHostController.navigate("Sign Up")
-
+        Button(
+            // below line is use to add onclick
+            // parameter for our button onclick
+            onClick = {
+                // when user is clicking the button
+                // we are displaying a toast message.
+                onToastRequested("Sign up, Boss!!", Color.Red)
+//                navController.run { SignupScreen(signupViewModel = hiltViewModel) }
             },
-            leadingIcon = {
-                if (uiState is UiState.Loading) {
-                    CircularProgressIndicator(
-                        modifier = Modifier
-                            .padding(end = Dimension.pagePadding)
-                            .size(Dimension.smIcon),
-                        color = MaterialTheme.colors.onSecondary,
-                        strokeWidth = Dimension.xs
-                    )
-                }
-            }
-        )
 
-//        Row(
-//            verticalAlignment = Alignment.CenterVertically,
-//            horizontalArrangement = Arrangement.spacedBy(Dimension.pagePadding),
-//        ) {
-//            DrawableButton(
-//                paddingValue = PaddingValues(Dimension.sm),
-//                elevation = Dimension.elevation,
-//                painter = painterResource(id = R.drawable.ic_google),
-//                onButtonClicked = {},
-//                backgroundColor = MaterialTheme.colors.background,
-//                shape = MaterialTheme.shapes.medium,
-//                iconSize = Dimension.mdIcon.times(0.8f),
-//            )
-//            DrawableButton(
-//                paddingValue = PaddingValues(Dimension.sm),
-//                elevation = Dimension.elevation,
-//                painter = painterResource(id = R.drawable.ic_facebook),
-//                onButtonClicked = {},
-//                backgroundColor = MaterialTheme.colors.background,
-//                shape = MaterialTheme.shapes.medium,
-//                iconSize = Dimension.mdIcon.times(0.8f),
-//            )
-//            DrawableButton(
-//                paddingValue = PaddingValues(Dimension.sm),
-//                elevation = Dimension.elevation,
-//                painter = painterResource(id = R.drawable.ic_twitter),
-//                onButtonClicked = {},
-//                backgroundColor = MaterialTheme.colors.background,
-//                shape = MaterialTheme.shapes.medium,
-//                iconSize = Dimension.mdIcon.times(0.8f),
-//            )
-//            DrawableButton(
-//                paddingValue = PaddingValues(Dimension.sm),
-//                elevation = Dimension.elevation,
-//                painter = painterResource(id = R.drawable.ic_apple),
-//                onButtonClicked = {},
-//                backgroundColor = MaterialTheme.colors.background,
-//                shape = MaterialTheme.shapes.medium,
-//                iconSize = Dimension.mdIcon.times(0.8f),
-//            )
-//        }
+            // in below line we are using modifier
+            // which is use to add padding to our button
+            modifier = Modifier.padding(all = Dp(10F)),
 
+            // below line is use to set or
+            // button as enable or disable.
+            enabled = true,
+
+            // below line is use to
+            // add border to our button.
+            border = BorderStroke(width = 1.dp, brush = SolidColor(Color.White)),
+
+            // below line is use to add shape for our button.
+            shape = MaterialTheme.shapes.medium,
+        ){Text(text = "Register", color = Color.White)
+        }
         Divider(Modifier.padding(vertical = Dimension.pagePadding))
         CustomButton(
             modifier = Modifier,
