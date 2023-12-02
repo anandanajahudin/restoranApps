@@ -29,6 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.racodex.melly.R
 import com.racodex.melly.components.CustomInputField
 import com.racodex.melly.sealed.Screen
@@ -49,7 +50,7 @@ fun SignupScreen(
         )
     ) {
         Text(
-            text = stringResource(id = R.string.app_name),
+            text = "Register",
             style = MaterialTheme.typography.h1.copy(fontSize = 48.sp),
             color = MaterialTheme.colors.primary,
             fontFamily = FontFamily.Default,

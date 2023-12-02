@@ -31,6 +31,7 @@ import androidx.navigation.compose.rememberNavController
 import com.racodex.melly.R
 import com.racodex.melly.components.CustomButton
 import com.racodex.melly.components.CustomInputField
+import com.racodex.melly.screens.signup.SignupScreen
 import com.racodex.melly.sealed.Screen
 import com.racodex.melly.sealed.UiState
 import com.racodex.melly.ui.theme.Dimension
@@ -207,7 +208,8 @@ fun LoginScreen(
                 backgroundColor = MaterialTheme.colors.secondary
             ),
             onClick = {
-                controller.navigate(Screen.Signup.route)
+                controller.navigate("signup")
+//                controller.navigate(Screen.Signup.route)
 //                onToastRequested("Sign up, Boss!!", Color.Red)
             },
 
