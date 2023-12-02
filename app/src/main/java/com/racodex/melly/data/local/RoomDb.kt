@@ -221,7 +221,7 @@ abstract class RoomDb : RoomDatabase() {
                         name = "User",
                         profile = user,
                         phone = "+6285821364004",
-                        email = "example@gmail.com",
+                        email = "racodex@gmail.com",
                         password = "12345678",
                         token = "ds2f434ls2ks2lsj2ls",
                     )

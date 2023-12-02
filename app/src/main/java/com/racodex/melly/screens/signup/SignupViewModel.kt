@@ -16,5 +16,15 @@ class SignupViewModel @Inject constructor(
     private val userRepository: UserRepository,
 ) : ViewModel() {
     val uiState = mutableStateOf<UiState>(UiState.Idle)
+    val emailOrPhone = mutableStateOf<String?>("racodex@gmail.com")
+    val password = mutableStateOf<String?>("12345678")
+
+    fun updateEmailOrPhone(value: String?) {
+        this.emailOrPhone.value = value
+    }
+
+    fun updatePassword(value: String?) {
+        this.password.value = value
+    }
 
 }
